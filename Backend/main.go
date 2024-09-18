@@ -45,7 +45,7 @@ func main() {
 	app.Get("/fulldescription/:name/:id",controllers.GetDescription)
 
   app.Post("/create-organism", controllers.CreateOrganism)
-  app.Get("/get-organism/:id", controllers.GetOrganism)
+  app.Get("/get-organism/:id", controllers.GetOrganismById)
 
 	app.Listen(":3000")
 
