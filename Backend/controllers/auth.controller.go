@@ -4,6 +4,7 @@ import (
 	"net/http"
 	db "root/database"
 	"root/models"
+	"root/service"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -110,12 +111,11 @@ func Hello(c *fiber.Ctx) error {
 }
 
 func GetPicture(c *fiber.Ctx) error {
-	name := c.Params("name")
-	id, _ := strconv.Atoi(c.Params("id"))
-
-	return c.SendFile("./image/" + name + "_" + strconv.Itoa(id) + ".jpg")
-}
-
-func GetDescription(c *fiber.Ctx) error {
-	return nil
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"status": "invalid id",
+		})
+	}
+	return service.Pucture(c, id)
 }
