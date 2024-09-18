@@ -1,7 +1,9 @@
+import { Input } from '@/shared/ui/project/input';
+
 export const AllAnimals = () => {
   return (
     <>
-      <h1>Все животные</h1>
+      <Input placeholder='Поиск' type='text' />
     </>
   );
 };
