@@ -1,12 +1,13 @@
 import { Menubuttons } from "../Buttons/MenuButtons";
 
 export const Menu = () => {
+    const item = ["Животные", "Растения", "Грибы", "Карта"];
+
     return(
         <div className="flex justify-center mt-[90px] gap-[65px]">
-           <Menubuttons text="Животные"/>
-           <Menubuttons text="Растения"/>
-           <Menubuttons text="Грибы"/>
-           <Menubuttons text="Карта"/>
+           {item.map((text, index) => (
+             <Menubuttons key={index} text={text} />
+           ))}
         </div>
     )
 }
