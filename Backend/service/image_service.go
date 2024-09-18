@@ -23,16 +23,13 @@ func TwoPicture(c *fiber.Ctx, id int) error {
 	db.DB.DB.Where("name <> ?", "jinzhu").Find(&photos)
 	clices := photos[1:3]
 	if len(clices) > 0 {
-		var photoUrls []string
-		for _, p := range clices {
-			photoUrls = append(photoUrls, "./image/"+p.Name+".jpg")
+		for _, p := range photos {
+			c.SendFile("./image/" + p.Name + ".jpg")
 		}
-		return c.JSON(fiber.Map{
-			"photos": photoUrls,
-		})
 	}
 
 	return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 		"status": "not found",
 	})
+
 }
