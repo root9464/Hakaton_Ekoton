@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"root/initializers"
+	"root/database"
 	"root/models"
 
 	"github.com/gofiber/fiber/v2"

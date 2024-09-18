@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"net/http"
-	"root/initializers"
+	db "root/database"
 	"root/models"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -12,9 +13,12 @@ import (
 func SingUp(c *fiber.Ctx) error {
 	// body struct
 	var body struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		Role     string `json:"role"`
+		Firstname  string `json:"firstname" gorm:"type:varchar(100)"`
+		Lastname   string `json:"lastname" gorm:"type:varchar(100)"`
+		Patronymic string `json:"patronymic" gorm:"type:varchar(100)"`
+		Login      string `json:"login"`
+		Password   string `json:"password"`
+		Role       string `json:"role"`
 	}
 
 	// parse body
@@ -34,8 +38,15 @@ func SingUp(c *fiber.Ctx) error {
 	}
 
 	//create user
-	user := models.User{Email: body.Email, Password: string(hash), Role: body.Role}
-	result := initializers.DB.DB.Create(&user)
+	user := models.User{
+		Firstname:  body.Firstname,
+		Lastname:   body.Lastname,
+		Patronymic: body.Patronymic,
+		Login:      body.Login,
+		Password:   string(hash),
+		Role:       "user",
+	}
+	result := db.DB.DB.Create(&user)
 
 	if result.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
@@ -52,7 +63,7 @@ func SingUp(c *fiber.Ctx) error {
 func Login(c *fiber.Ctx) error {
 	// body struct
 	var body struct {
-		Email    string `json:"email"`
+		Login    string `json:"login"`
 		Password string `json:"password"`
 		Role     string `json:"role"`
 	}
@@ -64,7 +75,7 @@ func Login(c *fiber.Ctx) error {
 
 	//find user
 	var user models.User
-	initializers.DB.DB.First(&user, "email = ?", body.Email)
+	db.DB.DB.First(&user, "login = ?", body.Login)
 	if user.ID == 0 {
 		return c.Status(404).JSON(fiber.Map{
 			"status": "invalid email or password",
@@ -96,4 +107,15 @@ func Validate(c *fiber.Ctx) error {
 
 func Hello(c *fiber.Ctx) error {
 	return c.SendString("Hello, World!")
+}
+
+func GetPicture(c *fiber.Ctx) error {
+	name := c.Params("name")
+	id, _ := strconv.Atoi(c.Params("id"))
+
+	return c.SendFile("./image/" + name + "_" + strconv.Itoa(id) + ".jpg")
+}
+
+func GetDescription(c *fiber.Ctx) error {
+	return nil
 }
