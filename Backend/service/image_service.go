@@ -10,7 +10,7 @@ import (
 
 func Pucture(c *fiber.Ctx, id int) error {
 	var photo model.Photo
-	db.DB.DB.Where("organismid= ?", id).First(&photo)
+	db.DB.DB.Where("organism_id= ?", id).First(&photo)
 	if photo.ID != 0 {
 		return c.SendFile("./image/" + photo.Name + ".jpg")
 	} else {
