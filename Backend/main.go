@@ -29,7 +29,7 @@ func main() {
 
 	db.ConnectToDB()
 
-	db.DB.MigrateTable(&models.User{})
+	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{})
 
 	app := fiber.New()
 	//initRoutes(app)
@@ -43,6 +43,8 @@ func main() {
 
 
 	app.Get("/fulldescription/:name/:id",controllers.GetDescription)
+
+  app.Post("/create-mammal", controllers.CreateOrganism)
 
 	app.Listen(":3000")
 
