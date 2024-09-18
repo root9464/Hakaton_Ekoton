@@ -17,4 +17,8 @@ type MammalsShort struct {
 	Name   string `json:"name" gorm:"type:varchar(100)"`
 	Title  string `json:"title" gorm:"type:varchar(100)"`
 	Photos string `json:"photos" gorm:"type:varchar(100)"`
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 415758b2b9259d80addc60c0fdc905ebcbfe68bc

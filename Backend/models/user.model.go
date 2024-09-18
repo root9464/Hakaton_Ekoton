@@ -16,8 +16,3 @@ type User struct {
 	Password   string `json:"password" gorm:"type:varchar(100)"`
 	Role       string `json:"role" gorm:"type:varchar(50)"`
 }
-
-// Migration implements initializers.Table.
-func (*User) Migration(data interface{}) error {
-	panic("unimplemented")
-}
