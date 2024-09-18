@@ -22,8 +22,8 @@ func (s *Server) allRoutes() {
 	s.app.Post("/login", controllers.Login)
 	s.app.Get("/hello", middleware.AuthRole, controllers.Hello)
 
-	s.app.Get("/postimage/:id", controllers.GetPicture)
-	s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
+	// s.app.Get("/postimage/:id", controllers.GetPicture)
+	// s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
 
 	s.app.Post("/create-organism", controllers.CreateOrganism)
 	s.app.Get("/get-organism/:id", controllers.GetOrganismById)
