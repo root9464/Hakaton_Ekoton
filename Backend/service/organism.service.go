@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	db "root/database"
 	"root/dto"
 	"root/models"
