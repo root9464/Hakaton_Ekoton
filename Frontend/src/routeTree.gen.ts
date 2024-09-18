@@ -10,101 +10,99 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as AnimalPageIndexImport } from './routes/animal-page/index'
-import { Route as AllAnimalsIndexImport } from './routes/all-animals/index'
+import { Route as rootRoute } from './routes/__root';
+import { Route as AllAnimalsIndexImport } from './routes/all-animals/index';
+import { Route as AnimalPageIndexImport } from './routes/animal-page/index';
+import { Route as IndexImport } from './routes/index';
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AnimalPageIndexRoute = AnimalPageIndexImport.update({
   path: '/animal-page/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AllAnimalsIndexRoute = AllAnimalsIndexImport.update({
   path: '/all-animals/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/all-animals/': {
-      id: '/all-animals/'
-      path: '/all-animals'
-      fullPath: '/all-animals'
-      preLoaderRoute: typeof AllAnimalsIndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/all-animals/';
+      path: '/all-animals';
+      fullPath: '/all-animals';
+      preLoaderRoute: typeof AllAnimalsIndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/animal-page/': {
-      id: '/animal-page/'
-      path: '/animal-page'
-      fullPath: '/animal-page'
-      preLoaderRoute: typeof AnimalPageIndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/animal-page/';
+      path: '/animal-page';
+      fullPath: '/animal-page';
+      preLoaderRoute: typeof AnimalPageIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/all-animals': typeof AllAnimalsIndexRoute
-  '/animal-page': typeof AnimalPageIndexRoute
+  '/': typeof IndexRoute;
+  '/all-animals': typeof AllAnimalsIndexRoute;
+  '/animal-page': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/all-animals': typeof AllAnimalsIndexRoute
-  '/animal-page': typeof AnimalPageIndexRoute
+  '/': typeof IndexRoute;
+  '/all-animals': typeof AllAnimalsIndexRoute;
+  '/animal-page': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/all-animals/': typeof AllAnimalsIndexRoute
-  '/animal-page/': typeof AnimalPageIndexRoute
+  __root__: typeof rootRoute;
+  '/': typeof IndexRoute;
+  '/all-animals/': typeof AllAnimalsIndexRoute;
+  '/animal-page/': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/all-animals' | '/animal-page'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/all-animals' | '/animal-page'
-  id: '__root__' | '/' | '/all-animals/' | '/animal-page/'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: '/' | '/all-animals' | '/animal-page';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/' | '/all-animals' | '/animal-page';
+  id: '__root__' | '/' | '/all-animals/' | '/animal-page/';
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute
-  AnimalPageIndexRoute: typeof AnimalPageIndexRoute
+  IndexRoute: typeof IndexRoute;
+  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute;
+  AnimalPageIndexRoute: typeof AnimalPageIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllAnimalsIndexRoute: AllAnimalsIndexRoute,
   AnimalPageIndexRoute: AnimalPageIndexRoute,
-}
+};
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
 
 /* prettier-ignore-end */
 
