@@ -4,8 +4,6 @@ import (
 	"net/http"
 	db "root/database"
 	"root/models"
-	"root/service"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -108,14 +106,4 @@ func Validate(c *fiber.Ctx) error {
 
 func Hello(c *fiber.Ctx) error {
 	return c.SendString("Hello, World!")
-}
-
-func GetPicture(c *fiber.Ctx) error {
-	id, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{
-			"status": "invalid id",
-		})
-	}
-	return service.Pucture(c, id)
 }

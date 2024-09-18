@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 
 	controllers "root/controllers"
@@ -9,42 +11,47 @@ import (
 	models "root/models"
 )
 
-// func initRoutes(app *fiber.App) {
-// 	users := app.Group("/auth")
-// 	{
-// 		app.Post("/singup", controllers.SingUp)
-// 		app.Post("/login", controllers.Login)
-// 		app.Get("/validate", controllers.Validate)
-// 		app.Get("/hello", controllers.Hello)
+type Server struct {
+	app  *fiber.App
+	port string
+}
 
-// 		authenticated := users.Group("/", middleware.AuthToken)
-// 		{
-// 			authenticated.Get("/hello", controllers.Hello)
-// 		}
-// 	}
+func (s *Server) allRoutes() {
 
-// }
+	s.app.Post("/singup", controllers.SingUp)
+	s.app.Post("/login", controllers.Login)
+	s.app.Get("/hello", middleware.AuthRole, controllers.Hello)
+
+	s.app.Get("/postimage/:id", controllers.GetPicture)
+	s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
+
+	s.app.Post("/create-organism", controllers.CreateOrganism)
+	s.app.Get("/get-organism/:id", controllers.GetOrganismById)
+}
+
+func NewServer(port string) *Server {
+	s := &Server{
+		app:  fiber.New(),
+		port: port,
+	}
+
+	//s.app.Use(logger.New())
+	s.app.Static("/image", "./image")
+
+	return s
+}
+
+func (s *Server) Run() {
+	s.allRoutes()
+	log.Fatal(s.app.ListenTLS(":" + s.port, "./certs/minica.pem", "./certs/minica-key.pem"))
+}
 
 func main() {
 
 	db.ConnectToDB()
-
 	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{})
 
-	app := fiber.New()
-	//initRoutes(app)
-
-	app.Post("/singup", controllers.SingUp)
-	app.Post("/login", controllers.Login)
-	app.Get("/hello", middleware.AuthRole, controllers.Hello)
-
-	app.Get("/postimage/:id", controllers.GetPicture)
-
-	//app.Get("/fulldescription/:name/:id", controllers.GetDescription)
-
-	app.Post("/create-organism", controllers.CreateOrganism)
-	app.Get("/get-organism/:id", controllers.GetOrganismById)
-
-	app.Listen(":3000")
+	s := NewServer("3000")
+	s.Run()
 
 }
