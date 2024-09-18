@@ -60,6 +60,12 @@ func GetOrganism(ctx *fiber.Ctx, filter dto.FilterOrganismDTO) error {
 	return ctx.Status(200).JSON(organisms)
 }
 
+func DeleteOrganism(ctx *fiber.Ctx, id int) error {
+    organism := new(models.Organism)
+    db.DB.DB.Delete(organism, id)
+    return ctx.Status(200).JSON("OK")
+}
+
 // Util func
 func handleDBError(ctx *fiber.Ctx, err error, notFoundMessage string) error {
 	if err == gorm.ErrRecordNotFound {
@@ -73,7 +79,9 @@ func loadOrganisms[T any](filter dto.FilterOrganismDTO) (T, error) {
 	query := db.DB.DB
 
 	if filter.Short == "true" {
-		query = query.Select("id", "name", "class")
+		query = query.Table("organisms").Select("organisms.id, organisms.name, organisms.class, organisms.description, MIN(photos.name) as photo").
+        Joins("LEFT JOIN photos ON photos.organism_id = organisms.id").
+        Group("organisms.id")
 	} else {
 		query = query.Preload("Photos").Preload("Facts")
 	}

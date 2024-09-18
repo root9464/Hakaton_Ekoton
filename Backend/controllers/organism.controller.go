@@ -3,6 +3,7 @@ package controllers
 import (
 	"root/dto"
 	"root/service"
+	"strconv"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/mitchellh/mapstructure"
@@ -21,9 +22,14 @@ func CreateOrganism(ctx *fiber.Ctx) error {
 	return service.CreateOrganism(ctx, &organism)
 }
 
-func GetOrganismById(ctx *fiber.Ctx) error {
+func GetOrganism(ctx *fiber.Ctx) error {
 	params := ctx.Queries()
 	filter := dto.FilterOrganismDTO{}
 	mapstructure.Decode(params, &filter)
 	return service.GetOrganism(ctx, filter)
+}
+
+func DeleteOrganismByID(ctx *fiber.Ctx) error {
+  id, _ := strconv.Atoi(ctx.Params("id"))
+  return service.DeleteOrganism(ctx, id)
 }
