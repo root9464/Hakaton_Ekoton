@@ -54,7 +54,20 @@ func main() {
 	db.ConnectToDB()
 	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{})
 
-	s := NewServer("3000")
-	s.Run()
+	app := fiber.New()
+	//initRoutes(app)
+
+	app.Post("/singup", controllers.SingUp)
+	app.Post("/login", controllers.Login)
+	app.Get("/hello", middleware.AuthRole, controllers.Hello)
+
+	app.Get("/postimage/:id", controllers.GetPicture)
+
+	//app.Get("/fulldescription/:name/:id", controllers.GetDescription)
+
+	app.Post("/create-organism", controllers.CreateOrganism)
+	app.Get("/get-organism/:id", controllers.GetOrganismById)
+
+	app.Listen(":3000")
 
 }

@@ -1,15 +1,15 @@
 package service
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 	db "root/database"
 	"root/dto"
 	"root/models"
+
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
-	// Преобразовать dto.MammalsFull в models.Class
 	organism := models.Organism{
 		Class:       organismDto.Class,
 		Name:        organismDto.Name,
@@ -19,11 +19,10 @@ func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 		Lifestyle:   organismDto.Lifestyle,
 		Appearance:  organismDto.Appearance,
 	}
-	// Создать класс в базе данных
 	if err := db.DB.DB.Create(&organism).Error; err != nil {
 		return ctx.Status(500).JSON(fiber.Map{"error": err.Error()})
 	}
-	// Создать факты в базе данных
+
 	for _, factName := range organismDto.Facts {
 		fact := models.Fact{
 			Fact:       factName,
@@ -37,14 +36,65 @@ func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 	return ctx.Status(200).JSON(organism)
 }
 
-func GetOrganismByID(ctx *fiber.Ctx, organismId int) error {
-	var organism models.Organism
-
-	if err := db.DB.DB.Preload("Photos").Preload("Facts").First(&organism, organismId).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return ctx.Status(404).JSON(fiber.Map{"error": "Организм не найден"})
+func GetOrganism(ctx *fiber.Ctx, filter dto.FilterOrganismDTO) error {
+	if filter.Short == "true" {
+		organisms, err := loadOrganisms[[]dto.Organism](filter)
+		if err != nil {
+			return handleDBError(ctx, err, "Ошибка при получении списка организмов")
 		}
-		return ctx.Status(500).JSON(fiber.Map{"error": "ошибка"})
+		if len(organisms) == 0 {
+			return ctx.Status(404).JSON(fiber.Map{"error": "Организмы не найдены"})
+		}
+		return ctx.Status(200).JSON(organisms)
 	}
-	return ctx.Status(200).JSON(organism)
+
+	organisms, err := loadOrganisms[[]models.Organism](filter)
+	if err != nil {
+		return handleDBError(ctx, err, "Ошибка при получении списка организмов")
+	}
+
+	if len(organisms) == 0 {
+		return ctx.Status(404).JSON(fiber.Map{"error": "Организмы не найдены"})
+	}
+
+	return ctx.Status(200).JSON(organisms)
+}
+
+func DeleteOrganism(ctx *fiber.Ctx, id int) error {
+    organism := new(models.Organism)
+    db.DB.DB.Delete(organism, id)
+    return ctx.Status(200).JSON("OK")
+}
+
+// Util func
+func handleDBError(ctx *fiber.Ctx, err error, notFoundMessage string) error {
+	if err == gorm.ErrRecordNotFound {
+		return ctx.Status(404).JSON(fiber.Map{"error": notFoundMessage})
+	}
+	return ctx.Status(500).JSON(fiber.Map{"error": "Ошибка при обращении к базе данных"})
+}
+
+func loadOrganisms[T any](filter dto.FilterOrganismDTO) (T, error) {
+	organisms := new(T)
+	query := db.DB.DB
+
+	if filter.Short == "true" {
+		query = query.Table("organisms").Select("organisms.id, organisms.name, organisms.class, organisms.description, MIN(photos.name) as photo").
+        Joins("LEFT JOIN photos ON photos.organism_id = organisms.id").
+        Group("organisms.id")
+	} else {
+		query = query.Preload("Photos").Preload("Facts")
+	}
+
+	if filter.Class != "" {
+		query = query.Where("class = ?", filter.Class)
+	}
+
+	var err error
+	if filter.Id != "" {
+		err = query.First(organisms, filter.Id).Error
+	} else {
+		err = query.Find(organisms).Error
+	}
+	return *organisms, err
 }
