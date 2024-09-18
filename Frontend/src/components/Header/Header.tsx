@@ -1,8 +1,8 @@
-import { Navbar } from "@components/Header/NavBar/NavBar";
+import { Navbar } from "@components/NavBar/NavBar";
 
 export const Header = () => {
     return(
-        <div>
+        <div className="flex justify-center mt-[100px]">
             <Navbar/>
         </div>
     )
