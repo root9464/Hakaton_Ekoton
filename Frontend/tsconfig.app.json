@@ -7,9 +7,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@assets/*": ["src/assets/*"]
+      "@/*": ["./src/*"],
+      "@config/*": ["./src/shared/config/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
