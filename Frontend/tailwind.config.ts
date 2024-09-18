@@ -15,6 +15,13 @@ const config = {
     },
     extend: {
       colors: {
+        //my
+        colorText: '#1F1F1F',
+        Bg: '#DEE0E5',
+        uiBg: '#FFFFFF',
+        uiPrimary: '#007AFF',
+
+        //shadcn
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
