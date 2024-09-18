@@ -20,6 +20,7 @@ const config = {
         Bg: '#DEE0E5',
         uiBg: '#FFFFFF',
         uiPrimary: '#007AFF',
+        uiInput: '#EEEEF0',
 
         //shadcn
         border: 'hsl(var(--border))',

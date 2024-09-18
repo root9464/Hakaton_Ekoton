@@ -69,6 +69,6 @@
 
 
   body {
-    @apply bg-Bg text-foreground w-screen h-screen overflow-hidden absolute top-0 left-0;
+    @apply bg-Bg text-foreground w-screen h-screen overflow-x-hidden absolute top-0 left-0;
   }
 }
