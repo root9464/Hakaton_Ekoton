@@ -8,7 +8,7 @@ export const useGetFullInfo = (): Query<GetShortInfo[]> => {
     queryFn: () => {
       return new Promise<GetShortInfo[]>((resolve) => {
         setTimeout(() => {
-          resolve([shortInfo]);
+          resolve(shortInfo);
         }, 1000);
       });
     },
