@@ -12,12 +12,24 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as AnimalsIndexImport } fro./routes/Animals/index/index'
+import { Route as AnimalPageIndexImport } from './routes/animal-page/index'
+import { Route as AllAnimalsIndexImport } from './routes/all-animals/index'
+import { Route as AnimalsIndexImport } from './routes/Animals/index'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AnimalPageIndexRoute = AnimalPageIndexImport.update({
+  path: '/animal-page/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AllAnimalsIndexRoute = AllAnimalsIndexImport.update({
+  path: '/all-animals/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -44,6 +56,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimalsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/all-animals/': {
+      id: '/all-animals/'
+      path: '/all-animals'
+      fullPath: '/all-animals'
+      preLoaderRoute: typeof AllAnimalsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/animal-page/': {
+      id: '/animal-page/'
+      path: '/animal-page'
+      fullPath: '/animal-page'
+      preLoaderRoute: typeof AnimalPageIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -52,36 +78,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/Animals': typeof AnimalsIndexRoute
+  '/all-animals': typeof AllAnimalsIndexRoute
+  '/animal-page': typeof AnimalPageIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/Animals': typeof AnimalsIndexRoute
+  '/all-animals': typeof AllAnimalsIndexRoute
+  '/animal-page': typeof AnimalPageIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/Animals/': typeof AnimalsIndexRoute
+  '/all-animals/': typeof AllAnimalsIndexRoute
+  '/animal-page/': typeof AnimalPageIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Animals'
+  fullPaths: '/' | '/Animals' | '/all-animals' | '/animal-page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Animals'
-  id: '__root__' | '/' | '/Animals/'
+  to: '/' | '/Animals' | '/all-animals' | '/animal-page'
+  id: '__root__' | '/' | '/Animals/' | '/all-animals/' | '/animal-page/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnimalsIndexRoute: typeof AnimalsIndexRoute
+  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute
+  AnimalPageIndexRoute: typeof AnimalPageIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnimalsIndexRoute: AnimalsIndexRoute,
+  AllAnimalsIndexRoute: AllAnimalsIndexRoute,
+  AnimalPageIndexRoute: AnimalPageIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +133,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/Animals/"
+        "/Animals/",
+        "/all-animals/",
+        "/animal-page/"
       ]
     },
     "/": {
@@ -105,6 +143,12 @@ export const routeTree = rootRoute
     },
     "/Animals/": {
       "filePath": "Animals/index.tsx"
+    },
+    "/all-animals/": {
+      "filePath": "all-animals/index.tsx"
+    },
+    "/animal-page/": {
+      "filePath": "animal-page/index.tsx"
     }
   }
 }

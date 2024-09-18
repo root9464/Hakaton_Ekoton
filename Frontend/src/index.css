@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -31,6 +32,7 @@
     --radius: 0.5rem
   }
 
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -59,12 +61,14 @@
   }
 }
 
+
 @layer base {
   * {
     @apply border-border;
   }
 
+
   body {
-    @apply bg-background text-foreground bg-slate-600;
+    @apply bg-Bg text-foreground w-screen h-screen overflow-hidden absolute top-0 left-0;
   }
 }
