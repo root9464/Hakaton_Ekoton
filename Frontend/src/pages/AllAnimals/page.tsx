@@ -1,9 +1,9 @@
-import { Input } from '@/shared/ui/project/input';
+import { Map } from '@/shared/components/Map/test';
 
 export const AllAnimals = () => {
   return (
     <>
-      <Input placeholder='Поиск' type='text' />
+      <Map />
     </>
   );
 };

@@ -19,7 +19,7 @@ export const Modal = ({ onClick }: ModalProps) => {
           <Input placeholder='Пароль' type='text' className='w-full bg-uiInput text-[#8E8E93] col-span-2' />
           <Input placeholder='Имя' type='text' className='w-full bg-uiInput text-[#8E8E93]' />
           <Input placeholder='Фамилия' type='text' className='w-full bg-uiInput text-[#8E8E93]' />
-          <Input placeholder='Телефон' type='text' className='w-3/5 bg-uiInput text-[#8E8E93] col-span-2 justify-self-end' />
+          <Input placeholder='Телефон' type='text' className='w-7/12 bg-uiInput text-[#8E8E93] col-span-2 justify-self-end' />
         </div>
         <Lion fill='#007AFF' width={100} height={109} className='absolute bottom-0 left-1/4 -translate-x-1/2' />
       </form>
