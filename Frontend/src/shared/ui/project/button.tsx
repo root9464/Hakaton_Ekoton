@@ -8,14 +8,17 @@ type ButtonProps = {
 };
 
 export const Button = ({ text, onClick, className, img }: ButtonProps) => (
-  <button className={`bg-blue-500 hover:bg-blue-700 text-white px-[26px] py-[10px] w-max h-fit ${className}`} onClick={onClick}>
+  <button
+    className={`bg-blue-500 hover:bg-blue-700 text-white px-6 py-[10px] w-max h-fit flex gap-2 items-center ${className}`}
+    onClick={onClick}>
     {text}
-    <img src={img} alt='' />
+    {img && <img src={img} alt='' width={20} height={20} />}
   </button>
 );
 
-export const LinkButton = ({ text, className, to }: ButtonProps & { to: string }) => (
-  <Link to={to} className={`bg-uiPrimary hover:bg-blue-700 text-white px-[26px] py-[15px] w-fit h-max ${className}`}>
+export const LinkButton = ({ text, className, to, img }: ButtonProps & { to: string }) => (
+  <Link to={to} className={`bg-uiPrimary hover:bg-blue-700 text-white px-6 py-[10px] w-fit h-max flex gap-2 items-center ${className}`}>
     {text}
+    {img && <img src={img} alt='' width={20} height={20} />}
   </Link>
 );
