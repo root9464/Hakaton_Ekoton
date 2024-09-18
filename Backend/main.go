@@ -26,7 +26,8 @@ func (s *Server) allRoutes() {
 	// s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
 
 	s.app.Post("/create-organism", controllers.CreateOrganism)
-	s.app.Get("/get-organism/:id", controllers.GetOrganismById)
+	s.app.Get("/get-organism", controllers.GetOrganism)
+	s.app.Delete("/delete-organism/:id", controllers.DeleteOrganismByID)
 }
 
 func NewServer(port string) *Server {
@@ -44,9 +45,7 @@ func NewServer(port string) *Server {
 func (s *Server) Run() {
 	s.allRoutes()
 
-	log.Fatal(s.app.Listen(":" + s.port))
-
-	//log.Fatal(s.app.ListenTLS(":" + s.port, "./certs/minica.pem", "./certs/minica-key.pem"))
+	log.Fatal(s.app.ListenTLS(":"+s.port, "./certs/minica.pem", "./certs/minica-key.pem"))
 }
 
 func main() {
@@ -54,20 +53,7 @@ func main() {
 	db.ConnectToDB()
 	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{})
 
-	app := fiber.New()
-	//initRoutes(app)
-
-	app.Post("/singup", controllers.SingUp)
-	app.Post("/login", controllers.Login)
-	app.Get("/hello", middleware.AuthRole, controllers.Hello)
-
-	app.Get("/postimage/:id", controllers.GetPicture)
-
-	//app.Get("/fulldescription/:name/:id", controllers.GetDescription)
-
-	app.Post("/create-organism", controllers.CreateOrganism)
-	app.Get("/get-organism/:id", controllers.GetOrganismById)
-
-	app.Listen(":3000")
+	s := NewServer("3000")
+	s.Run()
 
 }
