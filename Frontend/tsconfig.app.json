@@ -7,9 +7,16 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@assets/*": ["src/assets/*"]
+      "@/*": ["./src/*"],
+      "@config/*": ["./src/shared/config/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@ui/*": ["./src/shared/ui/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@api/*": ["./src/shared/api/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/shared/hooks/*"],
+      "@assets/*": ["./src/shared/assets/*"],
+      "@lib/*": ["./src/shared/lib/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
