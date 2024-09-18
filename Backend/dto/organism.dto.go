@@ -1,6 +1,7 @@
 package dto
 
 type OrganismFull struct {
+	Class       string   `json:"class" valid:"required~Class is required"`
 	Name        string   `json:"name" valid:"required~Name is required,stringlength(1|100)~Name length must be between 1 and 100 characters"`
 	Title       string   `json:"title" valid:"required~Title is required,stringlength(1|100)~Title length must be between 1 and 100 characters"`
 	Description string   `json:"description" valid:"required~Description is required"`

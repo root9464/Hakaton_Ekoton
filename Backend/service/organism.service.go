@@ -1,16 +1,17 @@
 package service
 
 import (
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 	db "root/database"
 	"root/dto"
 	"root/models"
-  "gorm.io/gorm"
-	"github.com/gofiber/fiber/v2"
 )
 
 func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 	// Преобразовать dto.MammalsFull в models.Class
 	organism := models.Organism{
+		Class:       organismDto.Class,
 		Name:        organismDto.Name,
 		Title:       organismDto.Title,
 		Description: organismDto.Description,
@@ -25,7 +26,7 @@ func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 	// Создать факты в базе данных
 	for _, factName := range organismDto.Facts {
 		fact := models.Fact{
-			Fact:    factName,
+			Fact:       factName,
 			OrganismID: organism.ID,
 		}
 		if err := db.DB.DB.Create(&fact).Error; err != nil {
@@ -36,15 +37,14 @@ func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 	return ctx.Status(200).JSON(organism)
 }
 
-
 func GetOrganismByID(ctx *fiber.Ctx, organismId int) error {
-  var organism models.Organism
+	var organism models.Organism
 
-  if err := db.DB.DB.Preload("Photos").Preload("Facts").First(&organism, organismId).Error; err != nil {
+	if err := db.DB.DB.Preload("Photos").Preload("Facts").First(&organism, organismId).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-      return ctx.Status(404).JSON(fiber.Map{"error": "Организм не найден"})
+			return ctx.Status(404).JSON(fiber.Map{"error": "Организм не найден"})
 		}
-		 return ctx.Status(500).JSON(fiber.Map{"error": "ошибка"})
+		return ctx.Status(500).JSON(fiber.Map{"error": "ошибка"})
 	}
-  return ctx.Status(200).JSON(organism)
+	return ctx.Status(200).JSON(organism)
 }
