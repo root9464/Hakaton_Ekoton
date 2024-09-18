@@ -1,5 +1,6 @@
 package dto
 
+
 type OrganismFull struct {
 	Class       string   `json:"class" valid:"required~Class is required"`
 	Name        string   `json:"name" valid:"required~Name is required,stringlength(1|100)~Name length must be between 1 and 100 characters"`
@@ -11,9 +12,14 @@ type OrganismFull struct {
 	Facts       []string `json:"facts" valid:"required~Facts are required"`
 }
 
-type OrganismShort struct {
-	ID     int    `json:"id"`
-	Name   string `json:"name"`
-	Title  string `json:"title"`
-	Photos string `json:"photos"`
+type Organism struct {
+	ID     int           `json:"id"`
+	Class  string        `json:"class"`
+	Name   string        `json:"name"`
+}
+
+type FilterOrganismDTO struct {
+	Id    string `json:"id"`
+	Class string `json:"class"`
+	Short string `json:":short"`
 }
