@@ -65,6 +65,6 @@
   }
 
   body {
-    @apply bg-background text-foreground bg-slate-600;
+    @apply bg-Bg text-foreground w-screen h-screen overflow-hidden absolute top-0 left-0;
   }
 }
