@@ -12,7 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as TestIndexImport } from './routes/test/index'
+import { Route as AnimalsIndexImport } fro./routes/Animals/index/index'
 
 // Create/Update Routes
 
@@ -21,8 +21,8 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const TestIndexRoute = TestIndexImport.update({
-  path: '/test/',
+const AnimalsIndexRoute = AnimalsIndexImport.update({
+  path: '/Animals/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -37,11 +37,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/test/': {
-      id: '/test/'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestIndexImport
+    '/Animals/': {
+      id: '/Animals/'
+      path: '/Animals'
+      fullPath: '/Animals'
+      preLoaderRoute: typeof AnimalsIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -51,37 +51,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/test': typeof TestIndexRoute
+  '/Animals': typeof AnimalsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/test': typeof TestIndexRoute
+  '/Animals': typeof AnimalsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/test/': typeof TestIndexRoute
+  '/Animals/': typeof AnimalsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/test'
+  fullPaths: '/' | '/Animals'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/test'
-  id: '__root__' | '/' | '/test/'
+  to: '/' | '/Animals'
+  id: '__root__' | '/' | '/Animals/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TestIndexRoute: typeof TestIndexRoute
+  AnimalsIndexRoute: typeof AnimalsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TestIndexRoute: TestIndexRoute,
+  AnimalsIndexRoute: AnimalsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/test/"
+        "/Animals/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/test/": {
-      "filePath": "test/index.tsx"
+    "/Animals/": {
+      "filePath": "Animals/index.tsx"
     }
   }
 }

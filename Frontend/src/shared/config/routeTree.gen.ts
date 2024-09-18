@@ -12,7 +12,7 @@
 
 import { Route as rootRoute } from '../../routes/__root';
 import { Route as IndexImport } from '../../routes/index';
-import { Route as TestIndexImport } from '../../routes/test/index';
+import { Route as TestIndexImport } from '../../routes/Animals/index';
 
 // Create/Update Routes
 

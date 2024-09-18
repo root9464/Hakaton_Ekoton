@@ -1,4 +1,4 @@
-import { Navbar } from '@/shared/components/NavBar/NavBar';
+import { Navbar } from '@shared/components/NavBar/NavBar';
 
 export const Header = () => {
   return (
