@@ -20,8 +20,7 @@ type Server struct {
 
 func (s *Server) allRoutes() {
 
-	s.app.Post("/singup", controllers.SingUp)
-	s.app.Post("/login", controllers.Login)
+	s.app.Post("/singup", controllers.SignUp)
 
 	// s.app.Get("/postimage/:id", controllers.GetPicture)
 	// s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)

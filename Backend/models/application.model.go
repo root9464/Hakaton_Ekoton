@@ -3,7 +3,7 @@ package models
 type Application struct {
 	ID         int    `json:"id" gorm:"type:uuid;primary_key;autoIncrement"`
 	Description string `json:"description" gorm:"type:varchar(50)"`
-	UserEmail     string    `json:"user_email" gorm:"type:uuid"`
+	UserEmail     string    `json:"user_email" gorm:"type:varchar(50)"`
 }
 
 var regions = []string{

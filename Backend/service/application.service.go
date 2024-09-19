@@ -8,8 +8,9 @@ import (
 )
 
 func Application(ctx *fiber.Ctx, application *models.Application) error {
-	db.DB.DB.Create(application)
-	
+	if err := db.DB.DB.Create(&application).Error; err != nil {
+		return ctx.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
 	return ctx.Status(200).JSON(fiber.Map{
 		"status": "success",
 	})
