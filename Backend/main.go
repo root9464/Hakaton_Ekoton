@@ -47,6 +47,7 @@ func NewServer(port string) *Server {
 	s.app.Static("/image", "./image")
 	s.app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
 	return s
