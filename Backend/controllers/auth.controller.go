@@ -54,8 +54,10 @@ func SingUp(c *fiber.Ctx) error {
 	}
 
 	//respon
-	return c.Status(http.StatusCreated).JSON(body)
+	return c.Status(http.StatusCreated).JSON(user)
 }
+
+
 
 func Login(c *fiber.Ctx) error {
 	// body struct
@@ -90,7 +92,7 @@ func Login(c *fiber.Ctx) error {
 
 	//generate jwt
 	//respon
-	return c.Status(http.StatusOK).JSON(body)
+	return c.Status(http.StatusOK).JSON(user)
 
 }
 
