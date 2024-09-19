@@ -18,7 +18,7 @@ type Server struct {
 
 func (s *Server) allRoutes() {
 
-	s.app.Post("/singup", controllers.SingUp)
+	s.app.Post("/singup", controllers.SingUp) 
 	s.app.Post("/login", controllers.Login)
 
 	// s.app.Get("/postimage/:id", controllers.GetPicture)
@@ -30,6 +30,8 @@ func (s *Server) allRoutes() {
 
 	s.app.Post("/application", controllers.Application)
 	s.app.Patch("/update/:id",controllers.Update)
+
+	s.app.Delete("/delete/:id", controllers.DeleteOrganismByID)
 
 }
 

@@ -60,11 +60,11 @@ func GetOrganism(ctx *fiber.Ctx, filter dto.FilterOrganismDTO) error {
 	return ctx.Status(200).JSON(organisms)
 }
 
-func DeleteOrganism(ctx *fiber.Ctx, id int) error {
-	organism := new(models.Organism)
-	db.DB.DB.Delete(organism, id)
-	return ctx.Status(200).JSON("OK")
-}
+// func DeleteOrganism(ctx *fiber.Ctx, id int) error {
+// 	organism := new(models.Organism)
+// 	db.DB.DB.Delete(organism, id)
+// 	return ctx.Status(200).JSON("OK")
+// }
 
 // Util func
 func handleDBError(ctx *fiber.Ctx, err error, notFoundMessage string) error {
@@ -109,6 +109,32 @@ func UpdateOrganizm(ctx *fiber.Ctx, id int, organizm *models.Organism) error {
 	err = db.DB.DB.Model(existOrganism).Updates(organizm).Error
 	if err != nil {
 		return ctx.Status(500).JSON(fiber.Map{"error": "Ошибка при обновлении организма"})
+	}
+
+	return ctx.Status(200).JSON(fiber.Map{"status": "success"})
+}
+
+func DeleteOrganism(ctx *fiber.Ctx, id int) error{
+	organism := new(models.Organism)
+	err := db.DB.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(organism, id).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&[]models.Photo{}, "organism_id = ?", id).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&[]models.Fact{}, "organism_id = ?", id).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return ctx.Status(500).JSON(fiber.Map{"error": "Ошибка при удалении организма"})
+		
 	}
 
 	return ctx.Status(200).JSON(fiber.Map{"status": "success"})

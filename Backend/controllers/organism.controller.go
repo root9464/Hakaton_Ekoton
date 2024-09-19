@@ -38,7 +38,18 @@ func DeleteOrganismByID(ctx *fiber.Ctx) error {
 func Update(ctx *fiber.Ctx) error {
 	id, _ := strconv.Atoi(ctx.Params("id"))
 	organizm := new(models.Organism)
-
+	if err := ctx.BodyParser(organizm); err != nil {
+		return ctx.Status(400).JSON(fiber.Map{"error": "Не удается прочитать JSON"})
+	}
+	if _, err := govalidator.ValidateStruct(*organizm); err != nil {
+		return ctx.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
 
 	return service.UpdateOrganizm(ctx, id, organizm)
+}
+
+
+func GetOrganismByID(ctx *fiber.Ctx) error {
+	id, _ := strconv.Atoi(ctx.Params("id"))
+	return service.DeleteOrganism(ctx, id)
 }
