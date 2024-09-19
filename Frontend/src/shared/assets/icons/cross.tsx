@@ -1,11 +1,6 @@
-type CrossIcoProps = {
-  width?: number;
-  height?: number;
-  fill: string;
-  className?: string;
-  onClick?: () => void;
-};
-export const CrossIco = ({ width = 56, height = 56, fill, className, onClick }: CrossIcoProps) => (
+import { SvgIconsProps } from '@/shared/types/SvgIcons';
+
+export const CrossIco = ({ width = 56, height = 56, fill, className, onClick }: SvgIconsProps) => (
   <svg width={width} height={height} viewBox='0 0 56 56' fill='none' className={className} onClick={onClick}>
     <path
       fill-rule='evenodd'

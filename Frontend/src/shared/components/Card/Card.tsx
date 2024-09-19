@@ -1,17 +1,25 @@
-import { Button } from "@ui/project/button";
-import Vector from "@assets/Vector.svg"
+import Vector from '@assets/Vector.svg';
+import { LinkButton } from '@ui/project/button';
 
-export const Card = () => { 
-    return(
-        <div className="w-[700px] h-[333px] flex justify-between">
-            <div className="w-[309px] h-full bg-green-600 rounded-tl-uiDefault rounded-bl-uiDefault flex">
+type CardProps = {
+  id: number;
+  text: string;
+  img: string;
+  path: string;
+};
 
-            </div>
-            <div className="flex flex-col bg-white rounded-tr-uiDefault rounded-br-uiDefault w-[390px]">
-                <p className="p-[30px] text-left text-[20px]">Белки – одни из самых многочисленных жителей московских территорий,
-                     они обитают на всех природных территориях столицы.</p>
-                <Button text="Подробнее" img={Vector}  className="mt-[35px] self-end rounded-[16px] flex items-center mr-[61px] gap-2"/>
-            </div>
-        </div>
-    )
-}
+export const Card = ({ id, text, img, path }: CardProps) => {
+  return (
+    <div className='w-[700px] h-[333px] flex justify-between' key={id}>
+      {img ? (
+        <img className='w-[309px] h-full bg-green-600 rounded-tl-uiDefault rounded-bl-uiDefault flex' src={img} alt='animal card image' />
+      ) : (
+        <div className='w-[309px] h-full bg-green-600 rounded-tl-uiDefault rounded-bl-uiDefault flex' />
+      )}
+      <div className='flex flex-col justify-between py-8 bg-white rounded-tr-uiDefault rounded-br-uiDefault w-[390px] h-full'>
+        <p className='p-[30px] text-left text-[20px]'>{text}</p>
+        <LinkButton to={path} text='Подробнее' img={Vector} className='mt-[35px] self-end rounded-[16px] mr-[61px]' />
+      </div>
+    </div>
+  );
+};
