@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	controllers "root/controllers"
 	db "root/database"
@@ -42,6 +43,9 @@ func NewServer(port string) *Server {
 
 	//s.app.Use(logger.New())
 	s.app.Static("/image", "./image")
+	s.app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 
 	return s
 }
