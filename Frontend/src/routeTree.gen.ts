@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as TestIndexImport } from './routes/test/index'
+import { Route as AnimalPageIndexImport } from './routes/animal-page/index'
+import { Route as AllAnimalsIndexImport } from './routes/all-animals/index'
+import { Route as AdminIndexImport } from './routes/admin/index'
+import { Route as AnimalPageIdImport } from './routes/animal-page/$id'
 
 // Create/Update Routes
 
@@ -21,8 +24,23 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const TestIndexRoute = TestIndexImport.update({
-  path: '/test/',
+const AnimalPageIndexRoute = AnimalPageIndexImport.update({
+  path: '/animal-page/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AllAnimalsIndexRoute = AllAnimalsIndexImport.update({
+  path: '/all-animals/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminIndexRoute = AdminIndexImport.update({
+  path: '/admin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AnimalPageIdRoute = AnimalPageIdImport.update({
+  path: '/animal-page/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -37,11 +55,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/test/': {
-      id: '/test/'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestIndexImport
+    '/animal-page/$id': {
+      id: '/animal-page/$id'
+      path: '/animal-page/$id'
+      fullPath: '/animal-page/$id'
+      preLoaderRoute: typeof AnimalPageIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/all-animals/': {
+      id: '/all-animals/'
+      path: '/all-animals'
+      fullPath: '/all-animals'
+      preLoaderRoute: typeof AllAnimalsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/animal-page/': {
+      id: '/animal-page/'
+      path: '/animal-page'
+      fullPath: '/animal-page'
+      preLoaderRoute: typeof AnimalPageIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -51,37 +90,63 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/test': typeof TestIndexRoute
+  '/animal-page/$id': typeof AnimalPageIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/all-animals': typeof AllAnimalsIndexRoute
+  '/animal-page': typeof AnimalPageIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/test': typeof TestIndexRoute
+  '/animal-page/$id': typeof AnimalPageIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/all-animals': typeof AllAnimalsIndexRoute
+  '/animal-page': typeof AnimalPageIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/test/': typeof TestIndexRoute
+  '/animal-page/$id': typeof AnimalPageIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/all-animals/': typeof AllAnimalsIndexRoute
+  '/animal-page/': typeof AnimalPageIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/test'
+  fullPaths:
+    | '/'
+    | '/animal-page/$id'
+    | '/admin'
+    | '/all-animals'
+    | '/animal-page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/test'
-  id: '__root__' | '/' | '/test/'
+  to: '/' | '/animal-page/$id' | '/admin' | '/all-animals' | '/animal-page'
+  id:
+    | '__root__'
+    | '/'
+    | '/animal-page/$id'
+    | '/admin/'
+    | '/all-animals/'
+    | '/animal-page/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TestIndexRoute: typeof TestIndexRoute
+  AnimalPageIdRoute: typeof AnimalPageIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute
+  AnimalPageIndexRoute: typeof AnimalPageIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TestIndexRoute: TestIndexRoute,
+  AnimalPageIdRoute: AnimalPageIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AllAnimalsIndexRoute: AllAnimalsIndexRoute,
+  AnimalPageIndexRoute: AnimalPageIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +162,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/test/"
+        "/animal-page/$id",
+        "/admin/",
+        "/all-animals/",
+        "/animal-page/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/test/": {
-      "filePath": "test/index.tsx"
+    "/animal-page/$id": {
+      "filePath": "animal-page/$id.tsx"
+    },
+    "/admin/": {
+      "filePath": "admin/index.tsx"
+    },
+    "/all-animals/": {
+      "filePath": "all-animals/index.tsx"
+    },
+    "/animal-page/": {
+      "filePath": "animal-page/index.tsx"
     }
   }
 }

@@ -1,11 +1,11 @@
-import { Button } from '@ui/project/button';
+import { AllCardBtn } from '@components/Buttons/AllCardBtn';
+import { Container } from '@components/Container/Container';
 
 export const App = () => {
   return (
     <>
-      <div className='w-96 h-10 bg-red-500'>
-        <Button text='Button' className='rounded-uiDefault' />
-      </div>
+      <Container />
+      <AllCardBtn />
     </>
   );
 };
