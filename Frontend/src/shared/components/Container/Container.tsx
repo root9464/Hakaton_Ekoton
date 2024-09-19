@@ -1,4 +1,4 @@
-import { useGetFullInfo } from '@/shared/api/useGetAnimalInfo';
+import { useGetShortInfo } from '@/shared/api/useGetAnimalInfo';
 import { MenuData } from '@/shared/lib/constants/all.consts';
 import { GetShortInfo } from '@/shared/types/getInfo';
 import { useEffect, useState } from 'react';
@@ -6,13 +6,12 @@ import { Menubuttons } from '../Buttons/MenuButtons';
 import { Card } from '../Card/Card';
 
 export const Container = () => {
-  const { data } = useGetFullInfo();
+  const { data } = useGetShortInfo();
   const [sorted, setSorted] = useState<GetShortInfo[] | null>();
 
   useEffect(() => {
-    if (data) {
-      setSorted(data);
-    }
+    if (!data) return;
+    setSorted(data);
   }, [data]);
 
   const classCategory: Record<string, string> = {
@@ -43,7 +42,7 @@ export const Container = () => {
         ))}
       </div>
 
-      <div className='w-full h-max mt-[200px] flex justify-start gap-[44px] flex-wrap'>
+      <div className='w-full max-w-[1700px] overflow-y-auto mt-[200px] flex justify-center gap-[44px] flex-wrap'>
         {sorted &&
           sorted.map((item) => <Card key={item.id} id={item.id} text={item.description} img={item.img} path={`/animal-page/${item.id}`} />)}
       </div>

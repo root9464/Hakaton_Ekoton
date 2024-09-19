@@ -2,7 +2,7 @@ import { shortInfo } from '@lib/constants/api.const';
 import { useQuery } from '@tanstack/react-query';
 import { GetShortInfo, Query } from '../types/getInfo';
 
-export const useGetFullInfo = (): Query<GetShortInfo[]> => {
+export const useGetShortInfo = (): Query<GetShortInfo[]> => {
   return useQuery({
     queryKey: ['full animal info'],
     queryFn: () => {

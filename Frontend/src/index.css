@@ -69,6 +69,29 @@
 
 
   body {
-    @apply bg-Bg text-foreground w-screen h-screen overflow-x-hidden absolute top-0 left-0 px-[100px];
+    @apply bg-Bg text-foreground w-screen h-auto overflow-x-hidden px-[100px] py-14;
   }
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #C0C2C7;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #EFEFF4;
 }
