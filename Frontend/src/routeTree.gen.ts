@@ -10,107 +10,107 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as AnimalPageIndexImport } from './routes/animal-page/index'
-import { Route as AllAnimalsIndexImport } from './routes/all-animals/index'
-import { Route as AnimalPageIdImport } from './routes/animal-page/$id'
+import { Route as rootRoute } from './routes/__root';
+import { Route as AllAnimalsIndexImport } from './routes/all-animals/index';
+import { Route as AnimalPageIdImport } from './routes/animal-page/$id';
+import { Route as AnimalPageIndexImport } from './routes/animal-page/index';
+import { Route as IndexImport } from './routes/index';
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AnimalPageIndexRoute = AnimalPageIndexImport.update({
   path: '/animal-page/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AllAnimalsIndexRoute = AllAnimalsIndexImport.update({
   path: '/all-animals/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AnimalPageIdRoute = AnimalPageIdImport.update({
   path: '/animal-page/$id',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/animal-page/$id': {
-      id: '/animal-page/$id'
-      path: '/animal-page/$id'
-      fullPath: '/animal-page/$id'
-      preLoaderRoute: typeof AnimalPageIdImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/animal-page/$id';
+      path: '/animal-page/$id';
+      fullPath: '/animal-page/$id';
+      preLoaderRoute: typeof AnimalPageIdImport;
+      parentRoute: typeof rootRoute;
+    };
     '/all-animals/': {
-      id: '/all-animals/'
-      path: '/all-animals'
-      fullPath: '/all-animals'
-      preLoaderRoute: typeof AllAnimalsIndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/all-animals/';
+      path: '/all-animals';
+      fullPath: '/all-animals';
+      preLoaderRoute: typeof AllAnimalsIndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/animal-page/': {
-      id: '/animal-page/'
-      path: '/animal-page'
-      fullPath: '/animal-page'
-      preLoaderRoute: typeof AnimalPageIndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/animal-page/';
+      path: '/animal-page';
+      fullPath: '/animal-page';
+      preLoaderRoute: typeof AnimalPageIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/animal-page/$id': typeof AnimalPageIdRoute
-  '/all-animals': typeof AllAnimalsIndexRoute
-  '/animal-page': typeof AnimalPageIndexRoute
+  '/': typeof IndexRoute;
+  '/animal-page/$id': typeof AnimalPageIdRoute;
+  '/all-animals': typeof AllAnimalsIndexRoute;
+  '/animal-page': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/animal-page/$id': typeof AnimalPageIdRoute
-  '/all-animals': typeof AllAnimalsIndexRoute
-  '/animal-page': typeof AnimalPageIndexRoute
+  '/': typeof IndexRoute;
+  '/animal-page/$id': typeof AnimalPageIdRoute;
+  '/all-animals': typeof AllAnimalsIndexRoute;
+  '/animal-page': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/animal-page/$id': typeof AnimalPageIdRoute
-  '/all-animals/': typeof AllAnimalsIndexRoute
-  '/animal-page/': typeof AnimalPageIndexRoute
+  __root__: typeof rootRoute;
+  '/': typeof IndexRoute;
+  '/animal-page/$id': typeof AnimalPageIdRoute;
+  '/all-animals/': typeof AllAnimalsIndexRoute;
+  '/animal-page/': typeof AnimalPageIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/animal-page/$id' | '/all-animals' | '/animal-page'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/animal-page/$id' | '/all-animals' | '/animal-page'
-  id: '__root__' | '/' | '/animal-page/$id' | '/all-animals/' | '/animal-page/'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: '/' | '/animal-page/$id' | '/all-animals' | '/animal-page';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/' | '/animal-page/$id' | '/all-animals' | '/animal-page';
+  id: '__root__' | '/' | '/animal-page/$id' | '/all-animals/' | '/animal-page/';
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AnimalPageIdRoute: typeof AnimalPageIdRoute
-  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute
-  AnimalPageIndexRoute: typeof AnimalPageIndexRoute
+  IndexRoute: typeof IndexRoute;
+  AnimalPageIdRoute: typeof AnimalPageIdRoute;
+  AllAnimalsIndexRoute: typeof AllAnimalsIndexRoute;
+  AnimalPageIndexRoute: typeof AnimalPageIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -118,11 +118,9 @@ const rootRouteChildren: RootRouteChildren = {
   AnimalPageIdRoute: AnimalPageIdRoute,
   AllAnimalsIndexRoute: AllAnimalsIndexRoute,
   AnimalPageIndexRoute: AnimalPageIndexRoute,
-}
+};
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
 
 /* prettier-ignore-end */
 

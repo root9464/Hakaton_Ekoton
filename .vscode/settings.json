@@ -1,0 +1,51 @@
+{
+    //prettier
+  "prettier.enable": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.enableDebugLogs": true,
+  "prettier.bracketSameLine": true,
+  "prettier.trailingComma": "all",
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 145,
+  "prettier.tabWidth": 2,
+  "prettier.arrowParens": "always",
+  "prettier.proseWrap": "always",
+  "prettier.endOfLine": "lf",
+  "prettier.bracketSpacing": true,
+  "prettier.singleAttributePerLine": false,
+
+  //eslint
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.debug": true,
+  "eslint.useESLintClass": true,
+  "eslint.useFlatConfig": true,
+  "eslint.lintTask.enable": true,
+  "eslint.run": "onSave",
+
+  //editor
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "always",
+    "source.removeUnusedImports": "always"
+  },
+
+
+  //ts
+  "typescript.autoClosingTags": true,
+  "typescript.format.enable": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "editor.fontLigatures": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFoldingRangeProvider": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+}
