@@ -16,6 +16,7 @@ func Pucture(c *fiber.Ctx, id int) error {
 	return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 		"status": "not found",
 	})
+	
 }
 
 func TwoPicture(c *fiber.Ctx, id int) error {

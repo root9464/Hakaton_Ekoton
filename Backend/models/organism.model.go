@@ -13,7 +13,7 @@ type Organism struct {
 	Class       string  `json:"class" gorm:"type:varchar(50)"`
 	Name        string  `json:"name" gorm:"type:varchar(100)"`
 	Title       string  `json:"title" gorm:"type:varchar(100)"`
-  Photos      []Photo `json:"photos" gorm:"foreignkey:OrganismID;constraint:OnDelete:CASCADE;"`
+	Photos      []Photo `json:"photos" gorm:"foreignkey:OrganismID;constraint:OnDelete:CASCADE;"`
 	Description string  `json:"description" gorm:"type:text"`
 	Geo         string  `json:"geo" gorm:"type:varchar(100)"`
 	Lifestyle   string  `json:"lifestyle" gorm:"type:text"`

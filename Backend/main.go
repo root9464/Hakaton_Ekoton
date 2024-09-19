@@ -28,6 +28,9 @@ func (s *Server) allRoutes() {
 	s.app.Post("/create-organism", controllers.CreateOrganism)
 	s.app.Get("/get-organism", controllers.GetOrganism)
 	s.app.Delete("/delete-organism/:id", controllers.DeleteOrganismByID)
+
+	s.app.Post("/application", controllers.Application)
+
 }
 
 func NewServer(port string) *Server {
@@ -51,7 +54,7 @@ func (s *Server) Run() {
 func main() {
 
 	db.ConnectToDB()
-	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{})
+	db.DB.DB.AutoMigrate(&models.User{}, &models.Organism{}, &models.Fact{}, &models.Photo{}, &models.Application{})
 
 	s := NewServer("3000")
 	s.Run()
