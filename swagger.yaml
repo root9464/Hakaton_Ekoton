@@ -1,0 +1,120 @@
+---
+swagger: "2.0"
+info:
+  description: "Ваш API Description"
+  version: "1.0.0"
+  title: "Ваш API Title"
+basePath: "/api"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /users:
+    get:
+      summary: "Получить всех пользователей"
+      description: "Возвращает список всех пользователей"
+      parameters: []
+      responses:
+        "200":
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+  /users/{id}:
+    get:
+      summary: "Получить пользователя по ID"
+      description: "Возвращает отдельного пользователя"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID пользователя"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/inline_response_200_users"
+  /createuser:
+    post:
+      summary: "Создать нового пользователя"
+      description: "Создает нового пользователя"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Объект пользователя, который нужно создать"
+        required: false
+        schema:
+          $ref: "#/definitions/user"
+        x-exportParamName: "User"
+      responses:
+        "200":
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/user"
+  /createmanyusers:
+    post:
+      summary: "Создать нескольких пользователей"
+      description: "Создает нескольких пользователей"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Массив пользователя, который нужно создать"
+        required: false
+        schema:
+          $ref: "#/definitions/user_1"
+        x-exportParamName: "User"
+      responses:
+        "200":
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/user_1"
+definitions:
+  inline_response_200_users:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      name: "name"
+      email: "email"
+  user_1:
+    type: "object"
+    properties:
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/user"
+    example:
+      users:
+      - name: "name"
+        email: "email"
+      - name: "name"
+        email: "email"
+  inline_response_200:
+    type: "object"
+    properties:
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_users"
+    example:
+      users:
+      - name: "name"
+        email: "email"
+      - name: "name"
+        email: "email"
+  user:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      name: "name"
+      email: "email"
