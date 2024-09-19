@@ -19,9 +19,25 @@ type Server struct {
 }
 
 func (s *Server) allRoutes() {
+	s.app.Post("/ping", func(c *fiber.Ctx) error {
+		var body struct {
+			Name string `json:"name"`
+		}
 
-	s.app.Post("/singup", controllers.SingUp)
-	s.app.Post("/login", controllers.Login)
+		if err := c.BodyParser(&body); err != nil {
+			return c.Status(500).JSON(&fiber.Map{
+				"status": "fail",
+				"error":  err.Error(),
+			})
+		}
+
+		return c.JSON(&fiber.Map{
+			"status": "success",
+			"body":   body,
+		})
+	})
+
+	s.app.Post("/singup", controllers.SignUp)
 
 	// s.app.Get("/postimage/:id", controllers.GetPicture)
 	// s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
@@ -45,6 +61,7 @@ func NewServer(port string) *Server {
 	s.app.Static("/image", "./image")
 	s.app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
 	return s

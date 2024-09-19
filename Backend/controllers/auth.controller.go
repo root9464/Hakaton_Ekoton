@@ -9,15 +9,14 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func SingUp(c *fiber.Ctx) error {
+func SignUp(c *fiber.Ctx) error {
 	// body struct
 	var body struct {
-		Firstname  string `json:"firstname" gorm:"type:varchar(100)"`
-		Lastname   string `json:"lastname" gorm:"type:varchar(100)"`
-		Patronymic string `json:"patronymic" gorm:"type:varchar(100)"`
-		Login      string `json:"login"`
-		Password   string `json:"password"`
-		Role       string `json:"role"`
+		Firstname string `json:"firstname"`
+		Lastname  string `json:"lastname"`
+		Login     string `json:"login"`
+		Password  string `json:"password"`
+		Role      string `json:"role"`
 	}
 
 	// parse body
@@ -27,73 +26,46 @@ func SingUp(c *fiber.Ctx) error {
 		})
 	}
 
-	//hash password
-	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), bcrypt.DefaultCost)
-
-	if err != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"status": "fail to hash password",
-		})
-	}
-
-	//create user
-	user := models.User{
-		Firstname:  body.Firstname,
-		Lastname:   body.Lastname,
-		Patronymic: body.Patronymic,
-		Login:      body.Login,
-		Password:   string(hash),
-		Role:       "user",
-	}
-	result := db.DB.DB.Create(&user)
-
-	if result.Error != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"status": "fail to create user",
-		})
-	}
-
-	//respon
-	return c.Status(http.StatusCreated).JSON(user)
-}
-
-
-
-func Login(c *fiber.Ctx) error {
-	// body struct
-	var body struct {
-		Firstname string `json:"firstname"`
-		Lastname  string `json:"lastname"`
-		Patronymic string `json:"patronymic"`
-		Login    string `json:"login"`
-		Password string `json:"password"`
-		//Role     string `json:"role"`
-	}
-	if err := c.BodyParser(&body); err != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"status": "fail to read body",
-		})
-	}
-
-	//find user
+	// find user
 	var user models.User
 	db.DB.DB.First(&user, "login = ?", body.Login)
+
 	if user.ID == 0 {
-		return c.Status(404).JSON(fiber.Map{
-			"status": "invalid email or password",
-		})
+		// create user
+		hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return c.Status(500).JSON(fiber.Map{
+				"status": "fail to hash password",
+			})
+		}
+
+		user = models.User{
+			Firstname: body.Firstname,
+			Lastname:  body.Lastname,
+			Login:     body.Login,
+			Password:  string(hash),
+			Role:      "user",
+		}
+		result := db.DB.DB.Create(&user)
+
+		if result.Error != nil {
+			return c.Status(500).JSON(fiber.Map{
+				"status": "fail to create user",
+			})
+		}
+
+		// response
+		return c.Status(http.StatusCreated).JSON(user)
+	} else {
+		// compare password and hash password
+		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+		if err != nil {
+			return c.Status(500).JSON(body)
+		}
+
+		// response
+		return c.Status(http.StatusOK).JSON(user)
 	}
-
-	//compare password and hash password
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
-	if err != nil {
-		return c.Status(500).JSON(body)
-	}
-
-	//generate jwt
-	//respon
-	return c.Status(http.StatusOK).JSON(user)
-
 }
 
 func Validate(c *fiber.Ctx) error {

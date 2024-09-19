@@ -14,5 +14,5 @@ export const Map = () => {
     }
   }, [svgRef]);
 
-  return <Russia type='select-single' ref={svgRef} size={1600} mapColor='#FFFFFF' strokeColor='blue' onSelect={console.log} />;
+  return <Russia ref={svgRef} size={1600} mapColor='#FFFFFF' strokeColor='blue' onSelect={console.log} />;
 };

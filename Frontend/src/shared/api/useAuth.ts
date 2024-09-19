@@ -1,13 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { DataUserSignUp, DataUserSingUpRes } from '../types/auth';
 
 const FnLogin = async () => {
   const { data } = await axios.post('http://127.0.0.1:3000/login');
   return data;
 };
 
-const FnSingUp = async () => {
-  const { data } = await axios.post('http://127.0.0.1:3000/singup');
+const FnSingUp = async (obj: DataUserSignUp): Promise<DataUserSingUpRes> => {
+  const { data } = await axios.post<DataUserSingUpRes>('http://127.0.0.1:3000/singup', obj);
   return data;
 };
 
@@ -19,8 +20,8 @@ export const useLogin = () => {
 };
 
 export const useSingUp = () => {
-  return useQuery({
-    queryKey: ['singup'],
-    queryFn: FnSingUp,
+  return useMutation({
+    mutationKey: ['singUp'],
+    mutationFn: (obj: DataUserSignUp) => FnSingUp(obj),
   });
 };
