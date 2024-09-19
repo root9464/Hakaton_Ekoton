@@ -61,9 +61,9 @@ func GetOrganism(ctx *fiber.Ctx, filter dto.FilterOrganismDTO) error {
 }
 
 func DeleteOrganism(ctx *fiber.Ctx, id int) error {
-    organism := new(models.Organism)
-    db.DB.DB.Delete(organism, id)
-    return ctx.Status(200).JSON("OK")
+	organism := new(models.Organism)
+	db.DB.DB.Delete(organism, id)
+	return ctx.Status(200).JSON("OK")
 }
 
 // Util func
@@ -80,8 +80,8 @@ func loadOrganisms[T any](filter dto.FilterOrganismDTO) (T, error) {
 
 	if filter.Short == "true" {
 		query = query.Table("organisms").Select("organisms.id, organisms.name, organisms.class, organisms.description, MIN(photos.name) as photo").
-        Joins("LEFT JOIN photos ON photos.organism_id = organisms.id").
-        Group("organisms.id")
+			Joins("LEFT JOIN photos ON photos.organism_id = organisms.id").
+			Group("organisms.id")
 	} else {
 		query = query.Preload("Photos").Preload("Facts")
 	}
@@ -97,4 +97,19 @@ func loadOrganisms[T any](filter dto.FilterOrganismDTO) (T, error) {
 		err = query.Find(organisms).Error
 	}
 	return *organisms, err
+}
+
+func UpdateOrganizm(ctx *fiber.Ctx, id int, organizm *models.Organism) error {
+	existOrganism := new(models.Organism)
+	err := db.DB.DB.First(existOrganism, id).Error
+	if err == gorm.ErrRecordNotFound {
+		return ctx.Status(404).JSON(fiber.Map{"error": "Такого организма не существует"})
+	}
+
+	err = db.DB.DB.Model(existOrganism).Updates(organizm).Error
+	if err != nil {
+		return ctx.Status(500).JSON(fiber.Map{"error": "Ошибка при обновлении организма"})
+	}
+
+	return ctx.Status(200).JSON(fiber.Map{"status": "success"})
 }

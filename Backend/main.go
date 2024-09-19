@@ -7,7 +7,7 @@ import (
 
 	controllers "root/controllers"
 	db "root/database"
-	middleware "root/middleware"
+	//middleware "root/middleware"
 	models "root/models"
 )
 
@@ -20,7 +20,6 @@ func (s *Server) allRoutes() {
 
 	s.app.Post("/singup", controllers.SingUp)
 	s.app.Post("/login", controllers.Login)
-	s.app.Get("/hello", middleware.AuthRole, controllers.Hello)
 
 	// s.app.Get("/postimage/:id", controllers.GetPicture)
 	// s.app.Get("/posttwoimage/:id", controllers.GetTwoPicture)
@@ -30,6 +29,7 @@ func (s *Server) allRoutes() {
 	s.app.Delete("/delete-organism/:id", controllers.DeleteOrganismByID)
 
 	s.app.Post("/application", controllers.Application)
+	s.app.Patch("/update/:id",controllers.Update)
 
 }
 

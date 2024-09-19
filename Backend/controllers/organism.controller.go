@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"root/dto"
+	"root/models"
 	"root/service"
 	"strconv"
 
@@ -30,6 +31,14 @@ func GetOrganism(ctx *fiber.Ctx) error {
 }
 
 func DeleteOrganismByID(ctx *fiber.Ctx) error {
-  id, _ := strconv.Atoi(ctx.Params("id"))
-  return service.DeleteOrganism(ctx, id)
+	id, _ := strconv.Atoi(ctx.Params("id"))
+	return service.DeleteOrganism(ctx, id)
+}
+
+func Update(ctx *fiber.Ctx) error {
+	id, _ := strconv.Atoi(ctx.Params("id"))
+	organizm := new(models.Organism)
+
+
+	return service.UpdateOrganizm(ctx, id, organizm)
 }

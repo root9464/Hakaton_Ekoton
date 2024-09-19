@@ -54,9 +54,7 @@ func SingUp(c *fiber.Ctx) error {
 	}
 
 	//respon
-	return c.Status(http.StatusCreated).JSON(fiber.Map{
-		"status": "success",
-	})
+	return c.Status(http.StatusCreated).JSON(body)
 }
 
 func Login(c *fiber.Ctx) error {
@@ -84,9 +82,7 @@ func Login(c *fiber.Ctx) error {
 	//compare password and hash password
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 	if err != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"status": "invalid email or password",
-		})
+		return c.Status(500).JSON(body)
 	}
 
 	//generate jwt
