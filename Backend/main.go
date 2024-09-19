@@ -7,6 +7,7 @@ import (
 
 	controllers "root/controllers"
 	db "root/database"
+
 	//middleware "root/middleware"
 	models "root/models"
 )
@@ -29,7 +30,7 @@ func (s *Server) allRoutes() {
 	s.app.Delete("/delete-organism/:id", controllers.DeleteOrganismByID)
 
 	s.app.Post("/application", controllers.Application)
-	s.app.Patch("/update/:id",controllers.Update)
+	s.app.Patch("/update/:id", controllers.Update)
 
 }
 
@@ -48,7 +49,9 @@ func NewServer(port string) *Server {
 func (s *Server) Run() {
 	s.allRoutes()
 
-	log.Fatal(s.app.ListenTLS(":"+s.port, "./certs/minica.pem", "./certs/minica-key.pem"))
+	log.Fatal(s.app.Listen(":" + s.port))
+
+	//log.Fatal(s.app.ListenTLS(":"+s.port, "./certs/minica.pem", "./certs/minica-key.pem"))
 }
 
 func main() {
