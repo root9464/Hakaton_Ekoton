@@ -1,6 +1,7 @@
 package service
 
 import (
+	"math/rand"
 	db "root/database"
 	"root/dto"
 	"root/models"
@@ -9,13 +10,25 @@ import (
 	"gorm.io/gorm"
 )
 
+func generateKadastrNumber() string {
+	b := make([]rune, 17)
+	for i := range b {
+		b[i] = kadastrRunes[rand.Intn(len(kadastrRunes))]
+	}
+	return string(b)
+}
+
+var (
+	kadastrRunes = []rune("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+)
+
 func CreateOrganism(ctx *fiber.Ctx, organismDto *dto.OrganismFull) error {
 	organism := models.Organism{
 		Class:       organismDto.Class,
 		Name:        organismDto.Name,
 		Title:       organismDto.Title,
 		Description: organismDto.Description,
-		Geo:         organismDto.Geo,
+		Geo:         generateKadastrNumber(),
 		Lifestyle:   organismDto.Lifestyle,
 		Appearance:  organismDto.Appearance,
 	}
@@ -114,7 +127,7 @@ func UpdateOrganizm(ctx *fiber.Ctx, id int, organizm *models.Organism) error {
 	return ctx.Status(200).JSON(fiber.Map{"status": "success"})
 }
 
-func DeleteOrganism(ctx *fiber.Ctx, id int) error{
+func DeleteOrganism(ctx *fiber.Ctx, id int) error {
 	organism := new(models.Organism)
 	err := db.DB.DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Delete(organism, id).Error; err != nil {
@@ -134,7 +147,7 @@ func DeleteOrganism(ctx *fiber.Ctx, id int) error{
 
 	if err != nil {
 		return ctx.Status(500).JSON(fiber.Map{"error": "Ошибка при удалении организма"})
-		
+
 	}
 
 	return ctx.Status(200).JSON(fiber.Map{"status": "success"})
