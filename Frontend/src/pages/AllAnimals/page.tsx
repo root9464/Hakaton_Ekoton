@@ -1,11 +1,11 @@
 import { GetShortInfo } from '@/shared/types/getInfo';
-import { useGetShortInfo } from '@shared/api/useGetAnimalInfo';
+import { useGetShortInfoQ } from '@shared/api/useGetAnimalInfo';
 import { Card } from '@shared/components/Card/Card';
 import { Input } from '@ui/project/input';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export const AllAnimals = () => {
-  const { data } = useGetShortInfo();
+  const { data } = useGetShortInfoQ();
 
   const [sorted, setSorted] = useState<GetShortInfo[] | null>();
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);

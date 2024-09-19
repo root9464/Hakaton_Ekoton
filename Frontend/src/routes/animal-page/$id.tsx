@@ -1,32 +1,22 @@
-import { FetchPosts, Post } from '@/shared/api/FetchPosts';
+import { useGetShortInfo } from '@/shared/api/useGetAnimalInfo';
 import { createFileRoute, useParams } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect } from 'react';
 
 export const Route = createFileRoute('/animal-page/$id')({
   component: () => <Page />,
 });
 
 function Page() {
-  const [state, setState] = useState<Post>({
-    userId: 0,
-    id: 0,
-    title: '',
-    body: '',
-  });
-
   const params = useParams({ from: '/animal-page/$id' });
+  const { data: state, isSuccess, mutate } = useGetShortInfo();
   useEffect(() => {
-    const data = FetchPosts({ postId: params.id });
-    data.then((data) => {
-      setState(data);
-    });
+    mutate({ id: Number(params.id) });
   }, [params.id]);
-
   return (
     <div>
       <h1>Animal Page</h1>
       <p>{params.id}</p>
-      <p>{state.body}</p>
+      <Suspense fallback={<div>Loading...</div>}>{state && isSuccess && state.map((item) => <p key={item.id}>{item.description}</p>)}</Suspense>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useGetShortInfo } from '@/shared/api/useGetAnimalInfo';
+import { useGetShortInfoQ } from '@/shared/api/useGetAnimalInfo';
 import { MenuData } from '@/shared/lib/constants/all.consts';
 import { GetShortInfo } from '@/shared/types/getInfo';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,8 @@ import { Menubuttons } from '../Buttons/MenuButtons';
 import { Card } from '../Card/Card';
 
 export const Container = () => {
-  const { data } = useGetShortInfo();
+  const { data } = useGetShortInfoQ();
+
   const [sorted, setSorted] = useState<GetShortInfo[] | null>();
 
   useEffect(() => {
@@ -15,8 +16,8 @@ export const Container = () => {
   }, [data]);
 
   const classCategory: Record<string, string> = {
-    animals: 'Животные',
-    plants: 'Растения',
+    animal: 'Животные',
+    plant: 'Растения',
     gibber: 'Грибы',
   };
 
