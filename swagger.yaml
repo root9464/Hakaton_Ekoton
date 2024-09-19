@@ -10,50 +10,92 @@ consumes:
 produces:
 - "application/json"
 paths:
-  /users:
-    get:
-      summary: "Получить всех пользователей"
-      description: "Возвращает список всех пользователей"
-      parameters: []
-      responses:
-        "200":
-          description: "Успешный ответ"
-          schema:
-            $ref: "#/definitions/inline_response_200"
-  /users/{id}:
-    get:
-      summary: "Получить пользователя по ID"
-      description: "Возвращает отдельного пользователя"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "ID пользователя"
-        required: true
-        type: "integer"
-        format: "int64"
-        x-exportParamName: "Id"
-      responses:
-        "200":
-          description: "Успешный ответ"
-          schema:
-            $ref: "#/definitions/inline_response_200_users"
-  /createuser:
+  /singup:
     post:
-      summary: "Создать нового пользователя"
-      description: "Создает нового пользователя"
+      summary: "Зарегестрироваться"
+      description: "Регестрация в систему"
       parameters:
-      - in: "body"
-        name: "user"
-        description: "Объект пользователя, который нужно создать"
-        required: false
+      - in: body
+        name: body
+        description: "Данные для регистрации"
         schema:
-          $ref: "#/definitions/user"
-        x-exportParamName: "User"
+          type: object
+          properties:
+            firstname:
+              type: string
+              example: "firstname"
+            lastname:
+              type: string
+              example: "lastname"
+            patronymic:
+              type: string
+              example: "patronymic"
+            login:
+              type: string
+              example: "login"
+            password:
+              type: string
+              example: "password"
+      responses:
+        200:
+          description: "Успешно"
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                enum: ["success"]
+  /login:
+    post:
+      summary: "Зарегестрироваться"
+      description: "Регестрация в систему"
+      parameters:
+      - in: body
+        name: body
+        description: "Данные для регистрации"
+        schema:
+          type: object
+          properties:
+            firstname:
+              type: string
+              example: "firstname"
+            login:
+              type: string
+              example: "login"
+            password:
+              type: string
+              example: "password"
+      responses:
+        200:
+          description: "Успешно"
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                enum: ["success"]
+  /image/{imageName.jpg}:
+    get:
+      summary: "Получить изображение"
+      description: "Возвращает изображение"
+      parameters:
+      - in: path
+        name: imageName
+        description: "Имя изображения"
+        required: true
+        type: string
       responses:
         "200":
           description: "Успешный ответ"
           schema:
-            $ref: "#/definitions/user"
+            type: string
+            enum: [<image>]
+            
+            
+            
+            
+            
+            
   /createmanyusers:
     post:
       summary: "Создать нескольких пользователей"
@@ -70,7 +112,8 @@ paths:
         "200":
           description: "Успешный ответ"
           schema:
-            $ref: "#/definitions/user_1"
+            type: string
+            format: binary
 definitions:
   inline_response_200_users:
     type: "object"
