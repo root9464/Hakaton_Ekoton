@@ -60,9 +60,12 @@ func SingUp(c *fiber.Ctx) error {
 func Login(c *fiber.Ctx) error {
 	// body struct
 	var body struct {
+		Firstname string `json:"firstname"`
+		Lastname  string `json:"lastname"`
+		Patronymic string `json:"patronymic"`
 		Login    string `json:"login"`
 		Password string `json:"password"`
-		Role     string `json:"role"`
+		//Role     string `json:"role"`
 	}
 	if err := c.BodyParser(&body); err != nil {
 		return c.Status(500).JSON(fiber.Map{
@@ -87,9 +90,7 @@ func Login(c *fiber.Ctx) error {
 
 	//generate jwt
 	//respon
-	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"status": "success",
-	})
+	return c.Status(http.StatusOK).JSON(body)
 
 }
 
